@@ -12,7 +12,7 @@ public class door2 : MonoBehaviour
 
     private void Start()
     {
-        GetComponent<SpriteRenderer>().color = new Color(255, 215, 47);//0 255 255 - зеленый
+        //GetComponent<SpriteRenderer>().color = new Color(255, 215, 47);//0 255 255 - зеленый
     }
 
     private void OnMouseDown()
@@ -20,16 +20,34 @@ public class door2 : MonoBehaviour
         GameManager gameManager = GameManager.GetInstance();
         if ((gameManager.state == codeZoneA || gameManager.state == codeZoneB) && countOfLives != 0)
         {
-            countOfLives--;
-
             if (gameManager.state == codeZoneA)
                 gameManager.state = codeZoneB;
             else
                 gameManager.state = codeZoneA;
+
+            Debug.Log(gameManager.state);
+
+            if (KeyIsContain())
+            {
+                countOfLives--;
+            }
+        }
+    }
+
+    private bool KeyIsContain()
+    {
+        GameObject[] mainCamera = GameObject.FindGameObjectsWithTag("MainCamera");
+        List<Key> keys = mainCamera[0].GetComponent<mainScript>().keys;
+
+        foreach (Key key in keys)
+        {
+            foreach (int room in key.rooms)
+            {
+                if (room == GameManager.GetInstance().state)
+                    return true;
+            }
         }
 
-        Debug.Log(gameManager.state);
-
-
+        return false;
     }
 }

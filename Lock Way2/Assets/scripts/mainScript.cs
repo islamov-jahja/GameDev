@@ -17,14 +17,17 @@ public class mainScript : MonoBehaviour
     private int _seconds = 0;
     private int _minutes = 0;
     public bool _withFirstKey;
-    private Vector3 _positionToInsert;
-    private const float DELTA = 0.546f;
+    public Vector3 _positionToInsert;
+    public float delta = 0.546f;
+    public List<Key> keys;
+    public GameObject man;
 
     void Start()
     {
         allCountOfDoors = GameObject.FindGameObjectsWithTag("Player").Length;
         state = -1;
         gameManager.state = 0;
+        RemoveMan();
         ChangeColorOfDoors();
         if (!_withFirstKey)
         {
@@ -46,6 +49,7 @@ public class mainScript : MonoBehaviour
         {
             state = gameManager.state;
             ChangeColorOfDoors();
+            RemoveMan();
         }
 
         if (IsWin())
@@ -68,7 +72,7 @@ public class mainScript : MonoBehaviour
                 stat++;
             }
 
-            if (door.GetComponent<door2>().countOfLives != 0 && (door.GetComponent<door2>().codeZoneA == state || door.GetComponent<door2>().codeZoneB == state))
+            /*if (door.GetComponent<door2>().countOfLives != 0 && (door.GetComponent<door2>().codeZoneA == state || door.GetComponent<door2>().codeZoneB == state))
             {
                 door.GetComponent<SpriteRenderer>().color = new Color(0, 255, 255);
             }
@@ -76,7 +80,7 @@ public class mainScript : MonoBehaviour
             if (door.GetComponent<door2>().countOfLives != 0 && (door.GetComponent<door2>().codeZoneA != state && door.GetComponent<door2>().codeZoneB != state))
             {
                 door.GetComponent<SpriteRenderer>().color = new Color(255, 215, 47);
-            }
+            }*/
         }
 
         foreach (GameObject status in statusOfDoors)
@@ -121,6 +125,18 @@ public class mainScript : MonoBehaviour
         }
 
         return false;
+    }
+
+    private void RemoveMan()
+    {
+        foreach (GameObject statusOfD in statusOfDoors)
+        {
+            if (gameManager.state == statusOfD.GetComponent<statusOfDoor>().state)
+            {
+                Vector3 pos = statusOfD.GetComponent<Transform>().position;
+                man.GetComponent<Transform>().position = new Vector3(pos.x - 0.4f, pos.y, pos.z);
+            }
+        }
     }
 
     IEnumerator DoCheck()
