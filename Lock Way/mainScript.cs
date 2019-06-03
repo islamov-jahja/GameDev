@@ -123,9 +123,8 @@ public class mainScript : MonoBehaviour
             {
                 _minutes++;
                 _seconds = 0;
+                timer.text = _minutes.ToString() + ":" + _seconds.ToString();
             }
-
-            timer.text = _minutes.ToString() + ":" + _seconds.ToString();
             yield return new WaitForSeconds(1);
         }
     }

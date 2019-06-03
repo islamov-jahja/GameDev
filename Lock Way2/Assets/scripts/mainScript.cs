@@ -2,12 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using Assets.Scripts;
 using System;
+using Assets.scripts;
 
 public class mainScript : MonoBehaviour
 {
-    // Start is called before the first frame update
     public GameObject[] statusOfDoors;
     private GameManager gameManager = GameManager.GetInstance();
     private int state;
@@ -17,6 +16,9 @@ public class mainScript : MonoBehaviour
     public int winState;
     private int _seconds = 0;
     private int _minutes = 0;
+    public bool _withFirstKey;
+    private Vector3 _positionToInsert;
+    private const float DELTA = 0.546f;
 
     void Start()
     {
@@ -24,6 +26,14 @@ public class mainScript : MonoBehaviour
         state = -1;
         gameManager.state = 0;
         ChangeColorOfDoors();
+        if (!_withFirstKey)
+        {
+            _positionToInsert = new Vector3(-2.506f, 4.22f, 0f);
+        }else
+        {
+            _positionToInsert = new Vector3(-1.96f, 4.22f, 0f);
+        }
+
         StartCoroutine("DoCheck");
     }
 
