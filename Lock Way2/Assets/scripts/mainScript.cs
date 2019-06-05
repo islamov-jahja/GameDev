@@ -89,7 +89,7 @@ public class mainScript : MonoBehaviour
             {
                 if (status.GetComponent<statusOfDoor>().countOfTeleport != 0 && status.GetComponent<statusOfDoor>().state == state)
                 {
-                    status.GetComponent<SpriteRenderer>().color = new Color(0, 255, 255);
+                    status.GetComponent<SpriteRenderer>().color = new Color(255, 21, 8);
                 }
 
                 if (status.GetComponent<statusOfDoor>().state != state || status.GetComponent<statusOfDoor>().countOfTeleport == 0)
@@ -104,7 +104,7 @@ public class mainScript : MonoBehaviour
             }
         }
 
-        statistic.text = "count of passed doors: " + stat + "/" + allCountOfDoors;
+        statistic.text = stat + "/" + allCountOfDoors;
     }
 
     private bool IsWin()
