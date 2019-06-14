@@ -36,6 +36,7 @@ public class door2 : MonoBehaviour
 
     private bool KeyIsContain()
     {
+        bool isContain = false;
         GameObject[] mainCamera = GameObject.FindGameObjectsWithTag("MainCamera");
         List<Key> keys = mainCamera[0].GetComponent<mainScript>().keys;
 
@@ -43,11 +44,18 @@ public class door2 : MonoBehaviour
         {
             foreach (int room in key.rooms)
             {
-                if (room == GameManager.GetInstance().state)
-                    return true;
+                if (key.wasSelected)
+                {
+                    if (room == GameManager.GetInstance().state)
+                        isContain = true;
+                }else
+                {
+                    if (room == codeZoneA || room == codeZoneB)
+                        return false;
+                }
             }
         }
 
-        return false;
+        return isContain;
     }
 }

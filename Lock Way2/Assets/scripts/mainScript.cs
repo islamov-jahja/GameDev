@@ -4,21 +4,25 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 using Assets.scripts;
+using TMPro;
+using UnityEngine.SceneManagement;
 
 public class mainScript : MonoBehaviour
 {
+    public TextMeshProUGUI winOrLose;
+    public int level = 1;
     public GameObject[] statusOfDoors;
     private GameManager gameManager = GameManager.GetInstance();
     private int state;
     private int allCountOfDoors;
-    public Text statistic;
-    public Text timer;
+    public TextMeshProUGUI statistic;
+    public TextMeshProUGUI timer;
     public int winState;
     private int _seconds = 0;
     private int _minutes = 0;
     public bool _withFirstKey;
     public Vector3 _positionToInsert;
-    public float delta = 0.546f;
+    public float delta = 0.23f;
     public List<Key> keys;
     public GameObject man;
 
@@ -31,10 +35,10 @@ public class mainScript : MonoBehaviour
         ChangeColorOfDoors();
         if (!_withFirstKey)
         {
-            _positionToInsert = new Vector3(-2.506f, 4.22f, 0f);
+            _positionToInsert = new Vector3(0.09f, 4.1f, 0f);
         }else
         {
-            _positionToInsert = new Vector3(-1.96f, 4.22f, 0f);
+            _positionToInsert = new Vector3(0.38f, 4.1f, 0f);
         }
 
         StartCoroutine("DoCheck");
@@ -54,10 +58,47 @@ public class mainScript : MonoBehaviour
 
         if (IsWin())
         {
-            Debug.Log("Молодец, победил!!!");
+            gameManager.minutesResult = _minutes;
+            gameManager.secondsResult = _seconds;
+            gameManager.level = level;
+
+            StopCoroutine("DoCheck");
+            StartCoroutine("Win");
         }
+
+        /*if (IsLosePosition())
+        {
+            Debug.Log("проиграл");
+        }*/
     }
 
+    IEnumerator Win()
+    {
+        winOrLose.text = "You win!";
+        yield return new WaitForSeconds(2);
+        SceneManager.LoadScene(3);
+    }
+
+    /*private bool IsLosePosition()
+    {
+        GameObject[] doors = GameObject.FindGameObjectsWithTag("Player");
+
+        int m_state = GameManager.GetInstance().state;
+
+        foreach (GameObject door in doors)
+        {
+            if ((door.GetComponent<door2>().codeZoneA == m_state || door.GetComponent<door2>().codeZoneB == m_state) && door.GetComponent<door2>().countOfLives > 0 && state != -2)
+            {
+                foreach(GameObject status in statusOfDoors)
+                {
+                    if (state == status.GetComponent<statusOfDoor>().state && status.GetComponent<statusOfDoor>().countOfTeleport > 0)
+                        return false;
+                }
+            }
+        }
+
+        return true;
+    }*/
 
     private void ChangeColorOfDoors()
     {
@@ -71,16 +112,6 @@ public class mainScript : MonoBehaviour
                 door.GetComponent<SpriteRenderer>().color = new Color(255, 0, 0);
                 stat++;
             }
-
-            /*if (door.GetComponent<door2>().countOfLives != 0 && (door.GetComponent<door2>().codeZoneA == state || door.GetComponent<door2>().codeZoneB == state))
-            {
-                door.GetComponent<SpriteRenderer>().color = new Color(0, 255, 255);
-            }
-
-            if (door.GetComponent<door2>().countOfLives != 0 && (door.GetComponent<door2>().codeZoneA != state && door.GetComponent<door2>().codeZoneB != state))
-            {
-                door.GetComponent<SpriteRenderer>().color = new Color(255, 215, 47);
-            }*/
         }
 
         foreach (GameObject status in statusOfDoors)
@@ -94,7 +125,7 @@ public class mainScript : MonoBehaviour
 
                 if (status.GetComponent<statusOfDoor>().state != state || status.GetComponent<statusOfDoor>().countOfTeleport == 0)
                 {
-                    status.GetComponent<SpriteRenderer>().color = new Color(0, 0, 0);
+                    status.GetComponent<SpriteRenderer>().color = new Color(100, 100, 100);
                 }
 
                 if (status.GetComponent<statusOfDoor>().isFinish)
@@ -104,7 +135,7 @@ public class mainScript : MonoBehaviour
             }
         }
 
-        statistic.text = stat + "/" + allCountOfDoors;
+        statistic.SetText(stat + "/" + allCountOfDoors);
     }
 
     private bool IsWin()
@@ -151,7 +182,7 @@ public class mainScript : MonoBehaviour
                 _seconds = 0;
             }
 
-            timer.text = _minutes.ToString() + ":" + _seconds.ToString();
+            timer.SetText(_minutes.ToString() + ":" + _seconds.ToString());
             yield return new WaitForSeconds(1);
         }
     }

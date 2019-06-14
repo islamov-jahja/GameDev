@@ -23,6 +23,7 @@ public class Key : MonoBehaviour
     {
         if(!wasSelected && _state == GameManager.GetInstance().state)
         {
+            transform.localScale = new Vector3(0.0584267f, 0.05450419f, 1f);
             Debug.Log(_state + ":" + GameManager.GetInstance().state);
             wasSelected = true;
             GameObject[] mainCamera = GameObject.FindGameObjectsWithTag("MainCamera");

@@ -4,11 +4,12 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 using Assets.scripts;
+using TMPro;
 
 public class statusOfDoor : MonoBehaviour
 {
     public bool isFinish;
-    public Text text;
+    public TextMeshProUGUI text;
     public int state;
     public int countOfTeleport;
 
@@ -41,7 +42,7 @@ public class statusOfDoor : MonoBehaviour
 
             foreach (GameObject obj in mainCamera[0].GetComponent<mainScript>().statusOfDoors)
             {
-                obj.GetComponent<SpriteRenderer>().color = new Color(0, 255, 254);
+                obj.GetComponent<SpriteRenderer>().color = new Color(100, 0, 100);
                 gameManager.state = -2;
             }
 
@@ -49,7 +50,7 @@ public class statusOfDoor : MonoBehaviour
             text.text = countOfTeleport.ToString();
         }
 
-        if (GetComponent<SpriteRenderer>().color == new Color(0, 255, 254))
+        if (GetComponent<SpriteRenderer>().color == new Color(100, 0, 100))
         {
             gameManager.state = state;
         }
