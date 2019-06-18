@@ -25,6 +25,7 @@ public class mainScript : MonoBehaviour
     public float delta = 0.23f;
     public List<Key> keys;
     public GameObject man;
+    public int[] results;
 
     void Start()
     {
@@ -63,7 +64,7 @@ public class mainScript : MonoBehaviour
             gameManager.minutesResult = _minutes;
             gameManager.secondsResult = _seconds;
             gameManager.lastLevel = level;
-
+            gameManager.results = results;
             StopCoroutine("DoCheck");
             StartCoroutine("Win");
             

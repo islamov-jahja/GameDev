@@ -10,16 +10,22 @@ namespace Assets.scripts
     {
         private GameManager()
         {
-            StreamReader fileWithData = new StreamReader("userData.txt");
-
-            while(!fileWithData.EndOfStream)
+            try{
+                StreamReader fileWithData = new StreamReader("./userData.txt");
+                while(!fileWithData.EndOfStream)
+                {
+                    levelsAndRatings.Add(fileWithData.ReadLine());
+                }
+                fileWithData.Close();
+            }catch(Exception e)
             {
-                levelsAndRatings.Add(fileWithData.ReadLine());
+                levelsAndRatings.Add("1*0-54:6:");
+                levelsAndRatings.Add("2*0-50:7:");
+                levelsAndRatings.Add("3*0-38:1:");
             }
-
-            fileWithData.Close();
         }
 
+        public int[] results;
         private static object _sync = new object();
 
         private static volatile GameManager _instance;
@@ -32,7 +38,7 @@ namespace Assets.scripts
 
         public int level;
 
-        public int lastLevel = 1;
+        public int lastLevel = 6;
 
         public int state { get; set; }
 

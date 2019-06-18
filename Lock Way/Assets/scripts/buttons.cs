@@ -15,7 +15,7 @@ public class buttons : MonoBehaviour
 
     public void Exit()
     {
-        StreamWriter writer = new StreamWriter("userData.txt");
+        StreamWriter writer = new StreamWriter("./userData.txt");
         GameManager gameManager = GameManager.GetInstance();
 
         foreach(string level in gameManager.levelsAndRatings)
@@ -24,6 +24,7 @@ public class buttons : MonoBehaviour
         }
         
         writer.Close();
+        
         Application.Quit();
     }
 

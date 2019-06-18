@@ -101,4 +101,19 @@ public class mainInLevelScene : MonoBehaviour
             LoadPage(page);
         }
     }
+
+    public void CleanStatistic()
+    {
+        GameManager gameManager = GameManager.GetInstance();
+        String newLine;
+
+        for(int i = 0; i < gameManager.levelsAndRatings.Count; i++)
+        {
+            newLine = gameManager.levelsAndRatings[i].Split('*')[0];
+            newLine += "*0-50:" + gameManager.levelsAndRatings[i].Split('*')[1].Split(':')[1] + ":";
+            gameManager.levelsAndRatings[i] = newLine;
+        }
+
+        SceneManager.LoadScene(2);
+    }
 }

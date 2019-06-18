@@ -74,11 +74,11 @@ public class results : MonoBehaviour
 
         if (gameManager.minutesResult < 1)
         {
-            if (gameManager.secondsResult <= 20)
+            if (gameManager.secondsResult <= gameManager.results[0])
                 return "+++";
-            else if (gameManager.secondsResult <= 30)
+            else if (gameManager.secondsResult <= gameManager.results[1])
                 return "++";
-            else if (gameManager.secondsResult <= 40)
+            else if (gameManager.secondsResult <= gameManager.results[2])
                 return "+";
         }
 
